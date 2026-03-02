@@ -75,8 +75,8 @@ body::before {
   border: none;
   background: var(--amber-dim);
   color: var(--bg);
-  font-family: 'Instrument Serif', serif;
-  font-size: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -229,6 +229,23 @@ body::before {
   opacity: 0;
   cursor: pointer;
 }
+
+.search-input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 300;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:hover { border-color: var(--border-light); }
+.search-input:focus { outline: none; border-color: var(--amber-dim); }
 
 /* ─── Song List ─── */
 .song-list {

@@ -45,6 +45,7 @@ const dom = {
   volumeValue:  $('volumeValue'),
   tempoSlider:  $('tempoSlider'),
   tempoValue:   $('tempoValue'),
+  searchInput:  $('searchInput'),
   infoBtn:      $('infoBtn'),
   infoModal:    $('infoModal'),
   modalClose:   $('modalClose'),
@@ -743,25 +744,46 @@ function populateComposers() {
   }
 }
 
-function showSongs(composer) {
+function filterSongs() {
+  const composer = dom.composerSelect.value;
+  const query = dom.searchInput.value.toLowerCase().trim();
   dom.songList.innerHTML = '';
-  if (!composer) {
-    dom.songList.innerHTML = '<div class="song-list-empty">Select a composer</div>';
+
+  if (!composer && !query) {
+    dom.songList.innerHTML = '<div class="song-list-empty">Search or select a composer</div>';
     return;
   }
 
-  const songs = catalog.filter(s => s.composer === composer);
+  let songs = catalog;
+  if (composer) songs = songs.filter(s => s.composer === composer);
+  if (query) songs = songs.filter(s =>
+    s.title.toLowerCase().includes(query) ||
+    s.composer.toLowerCase().includes(query)
+  );
+
   songs.sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
 
-  for (const song of songs) {
+  if (songs.length === 0) {
+    dom.songList.innerHTML = '<div class="song-list-empty">No matches</div>';
+    return;
+  }
+
+  const limit = Math.min(songs.length, 100);
+  for (let i = 0; i < limit; i++) {
+    const song = songs[i];
     const btn = document.createElement('button');
     btn.className = 'song-item';
+    const showComposer = !composer && query;
     btn.innerHTML = `
-      <span class="song-title">${escHtml(song.title)}</span>
+      <span class="song-title">${showComposer ? escHtml(song.composer) + ' — ' : ''}${escHtml(song.title)}</span>
       <span class="song-duration">${song.year} · ${formatTime(song.duration)}</span>
     `;
     btn.addEventListener('click', () => loadFromCatalog(song, btn));
     dom.songList.appendChild(btn);
+  }
+
+  if (songs.length > 100) {
+    dom.songList.innerHTML += `<div class="song-list-empty">${songs.length - 100} more — refine search</div>`;
   }
 }
 
@@ -797,9 +819,8 @@ dom.infoModal.addEventListener('click', e => {
   if (e.target === dom.infoModal) dom.infoModal.classList.remove('show');
 });
 
-dom.composerSelect.addEventListener('change', () => {
-  showSongs(dom.composerSelect.value);
-});
+dom.composerSelect.addEventListener('change', filterSongs);
+dom.searchInput.addEventListener('input', filterSongs);
 
 // ─── Init ─────────────────────────────────────────────
 
