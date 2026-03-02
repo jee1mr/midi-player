@@ -742,14 +742,14 @@ function showSongs(composer) {
   }
 
   const songs = catalog.filter(s => s.composer === composer);
-  songs.sort((a, b) => a.title.localeCompare(b.title));
+  songs.sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
 
   for (const song of songs) {
     const btn = document.createElement('button');
     btn.className = 'song-item';
     btn.innerHTML = `
       <span class="song-title">${escHtml(song.title)}</span>
-      <span class="song-duration">${formatTime(song.duration)}</span>
+      <span class="song-duration">${song.year} · ${formatTime(song.duration)}</span>
     `;
     btn.addEventListener('click', () => loadFromCatalog(song, btn));
     dom.songList.appendChild(btn);
