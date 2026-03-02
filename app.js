@@ -790,7 +790,6 @@ function filterSongs() {
 }
 
 async function loadFromCatalog(song, btnEl) {
-  console.log('Loading from catalog:', song.title, song.file);
   stopPlayback();
   showToast(`Loading: ${song.title}...`);
 
