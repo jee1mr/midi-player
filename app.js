@@ -792,6 +792,11 @@ async function loadFromCatalog(song, btnEl) {
 
   try {
     const res = await fetch(song.file);
+    if (!res.ok) {
+      showToast(`Failed to load (${res.status})`);
+      console.error('Fetch failed:', res.status, song.file);
+      return;
+    }
     const buf = await res.arrayBuffer();
     midiData = new Midi(buf);
     processMidi();
