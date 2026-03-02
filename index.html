@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIDI Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">midi<span>.</span>player</div>
+  <div class="midi-status">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">No MIDI Access</span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="section-label">Output Device</div>
+      <select class="device-select" id="deviceSelect">
+        <option value="">— Select Device —</option>
+      </select>
+      <button class="refresh-btn" id="refreshBtn">↻ Refresh Devices</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Library</div>
+      <select class="device-select" id="composerSelect">
+        <option value="">— Composer —</option>
+      </select>
+      <div class="song-list" id="songList"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Or Drop a File</div>
+      <div class="file-drop" id="fileDrop">
+        <div class="file-drop-icon">♫</div>
+        <div class="file-drop-text">
+          Drop <strong>.mid</strong> here
+        </div>
+        <input type="file" accept=".mid,.midi" id="fileInput">
+      </div>
+    </div>
+
+    <div class="sidebar-section" id="trackSection" style="display:none;">
+      <div class="section-label">Track Info</div>
+      <div id="trackInfo" class="track-info"></div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="piano-roll-container">
+      <canvas id="pianoRoll"></canvas>
+      <div class="empty-state" id="emptyState">
+        <div class="empty-state-icon">◇</div>
+        <div class="empty-state-text">Load a MIDI file to begin</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Transport -->
+<div class="transport">
+  <div class="transport-controls">
+    <button class="transport-btn" id="stopBtn" disabled title="Stop">
+      <svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="1"/></svg>
+    </button>
+    <button class="transport-btn" id="playBtn" disabled title="Play / Pause">
+      <svg viewBox="0 0 14 14" id="playIcon"><polygon points="3,1 13,7 3,13"/></svg>
+    </button>
+  </div>
+
+  <div class="progress-section">
+    <span class="time-display" id="currentTime">0:00</span>
+    <div class="progress-track" id="progressTrack">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="time-display" id="totalTime">0:00</span>
+  </div>
+
+  <div class="tempo-section">
+    <span class="tempo-label">Vol</span>
+    <input type="range" class="tempo-slider" id="volumeSlider" min="0" max="127" value="100">
+    <span class="tempo-value" id="volumeValue">100</span>
+  </div>
+
+  <div class="tempo-section">
+    <span class="tempo-label">Tempo</span>
+    <input type="range" class="tempo-slider" id="tempoSlider" min="25" max="200" value="100">
+    <span class="tempo-value" id="tempoValue">100%</span>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

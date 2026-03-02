@@ -1,0 +1,499 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0c0b0a;
+  --surface: #161413;
+  --surface-2: #1e1c1a;
+  --surface-3: #262320;
+  --border: #2a2725;
+  --border-light: #3a3633;
+  --text: #e8e0d6;
+  --text-dim: #8a8279;
+  --text-muted: #5a544d;
+  --amber: #d4a04a;
+  --amber-dim: #a67c35;
+  --amber-glow: #d4a04a33;
+  --red: #c75050;
+  --green: #5a9a6a;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Header ─── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.logo span { color: var(--amber); }
+
+.midi-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.status-dot.connected {
+  background: var(--green);
+  box-shadow: 0 0 8px #5a9a6a88;
+}
+
+.status-dot.error {
+  background: var(--red);
+  box-shadow: 0 0 8px #c7505088;
+}
+
+/* ─── Main Layout ─── */
+.main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: 280px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.device-select {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 300;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238a8279' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s;
+}
+
+.device-select:hover { border-color: var(--border-light); }
+.device-select:focus { outline: none; border-color: var(--amber-dim); }
+
+.refresh-btn {
+  margin-top: 8px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text);
+}
+
+.file-drop {
+  border: 1px dashed var(--border-light);
+  border-radius: 6px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.file-drop:hover, .file-drop.drag-over {
+  border-color: var(--amber-dim);
+  background: var(--amber-glow);
+}
+
+.file-drop-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+
+.file-drop:hover .file-drop-icon { color: var(--amber); }
+
+.file-drop-text {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.file-drop-text strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.file-drop input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ─── Song List ─── */
+.song-list {
+  margin-top: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.song-item {
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  width: 100%;
+}
+
+.song-item:hover {
+  background: var(--surface-2);
+}
+
+.song-item.active {
+  background: var(--amber-glow);
+}
+
+.song-title {
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 300;
+  line-height: 1.4;
+  display: block;
+}
+
+.song-duration {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.song-list-empty {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 12px 0;
+  text-align: center;
+}
+
+.track-info {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.track-info .label {
+  color: var(--text-muted);
+  display: inline-block;
+  width: 78px;
+}
+
+.track-info .value { color: var(--text); }
+.track-info .value.warn { color: var(--red); }
+.track-info .value.good { color: var(--green); }
+
+.track-name {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 400;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+/* ─── Content Area ─── */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.piano-roll-container {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  background: var(--surface);
+}
+
+#pianoRoll {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.empty-state.hidden { opacity: 0; }
+
+.empty-state-icon {
+  font-size: 48px;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+.empty-state-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ─── Transport Bar ─── */
+.transport {
+  border-top: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.transport-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.transport-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.transport-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text);
+}
+
+.transport-btn.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--bg);
+}
+
+.transport-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.transport-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.progress-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.time-display {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  min-width: 46px;
+  text-align: center;
+}
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--surface-3);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 12px;
+  height: 12px;
+  background: var(--amber);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.progress-track:hover .progress-fill::after { opacity: 1; }
+
+.tempo-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tempo-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.tempo-value {
+  font-size: 12px;
+  color: var(--amber);
+  min-width: 38px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tempo-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 3px;
+  background: var(--surface-3);
+  border-radius: 2px;
+  outline: none;
+}
+
+.tempo-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--text-dim);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.tempo-slider::-webkit-slider-thumb:hover { background: var(--text); }
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface-3);
+  border: 1px solid var(--border-light);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
