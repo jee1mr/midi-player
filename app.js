@@ -45,6 +45,9 @@ const dom = {
   volumeValue:  $('volumeValue'),
   tempoSlider:  $('tempoSlider'),
   tempoValue:   $('tempoValue'),
+  infoBtn:      $('infoBtn'),
+  infoModal:    $('infoModal'),
+  modalClose:   $('modalClose'),
   composerSelect: $('composerSelect'),
   songList:     $('songList'),
   toast:        $('toast'),
@@ -781,6 +784,12 @@ async function loadFromCatalog(song, btnEl) {
     console.error(e);
   }
 }
+
+dom.infoBtn.addEventListener('click', () => dom.infoModal.classList.add('show'));
+dom.modalClose.addEventListener('click', () => dom.infoModal.classList.remove('show'));
+dom.infoModal.addEventListener('click', e => {
+  if (e.target === dom.infoModal) dom.infoModal.classList.remove('show');
+});
 
 dom.composerSelect.addEventListener('change', () => {
   showSongs(dom.composerSelect.value);

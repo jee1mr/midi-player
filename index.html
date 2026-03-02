@@ -13,9 +13,12 @@
 <!-- Header -->
 <div class="header">
   <div class="logo">midi<span>.</span>player</div>
-  <div class="midi-status">
-    <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">No MIDI Access</span>
+  <div class="header-right">
+    <div class="midi-status">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">No MIDI Access</span>
+    </div>
+    <button class="info-btn" id="infoBtn" title="About">?</button>
   </div>
 </div>
 
@@ -99,6 +102,30 @@
     <span class="tempo-label">Tempo</span>
     <input type="range" class="tempo-slider" id="tempoSlider" min="25" max="200" value="100">
     <span class="tempo-value" id="tempoValue">100%</span>
+  </div>
+</div>
+
+<!-- Info Modal -->
+<div class="modal-overlay" id="infoModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">×</button>
+    <h2 class="modal-title">midi<span>.</span>player</h2>
+    <div class="modal-body">
+      <p>A browser-based MIDI player that sends note, pedal, and expression data to your piano over Bluetooth MIDI. Built for the Kawai CA series but works with any MIDI output device.</p>
+
+      <h3>How it works</h3>
+      <p>Uses the Web MIDI API to send MIDI messages with sub-millisecond precision via a lookahead timestamp scheduler. All note velocities, sustain/soft/sostenuto pedal, expression, and pitch bend data from the file are forwarded to your instrument.</p>
+
+      <h3>Library</h3>
+      <p>The built-in library uses the <a href="https://magenta.withgoogle.com/datasets/maestro" target="_blank" rel="noopener">MAESTRO Dataset v3</a> by Google Magenta — 1,276 virtuoso piano performances captured on Yamaha Disklaviers at the International Piano-e-Competition (2004–2018). These are real human performances with full dynamics, rubato, and pedalling at ~3ms timing precision.</p>
+      <p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> by Google LLC.</p>
+
+      <h3>Requirements</h3>
+      <p>Chrome or Edge (Web MIDI API). Pair your piano via macOS Audio MIDI Setup or OS Bluetooth settings before use.</p>
+
+      <h3>Keyboard shortcuts</h3>
+      <p><kbd>Space</kbd> Play / Pause &nbsp; <kbd>Esc</kbd> Stop</p>
+    </div>
   </div>
 </div>
 
