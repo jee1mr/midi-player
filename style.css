@@ -569,7 +569,7 @@ body::before {
 .modal-body p {
   font-size: 12px;
   line-height: 1.7;
-  color: var(--text-dim);
+  color: var(--text);
   margin-bottom: 6px;
 }
 
