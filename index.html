@@ -121,11 +121,19 @@
       <p>The built-in library uses the <a href="https://magenta.withgoogle.com/datasets/maestro" target="_blank" rel="noopener">MAESTRO Dataset v3</a> by Google Magenta — 1,276 virtuoso piano performances captured on Yamaha Disklaviers at the International Piano-e-Competition (2004–2018). These are real human performances with full dynamics, rubato, and pedalling at ~3ms timing precision.</p>
       <p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> by Google LLC.</p>
 
-      <h3>Requirements</h3>
-      <p>Chrome or Edge (Web MIDI API). Pair your piano via macOS Audio MIDI Setup or OS Bluetooth settings before use.</p>
+      <h3>Connecting on Mac</h3>
+      <p>1. Open <strong>Audio MIDI Setup</strong> (search in Spotlight).</p>
+      <p>2. Go to <strong>Window → Show MIDI Studio</strong>.</p>
+      <p>3. Click <strong>Configure Bluetooth</strong> in the toolbar.</p>
+      <p>4. Turn on Bluetooth on your piano, then click <strong>Connect</strong> next to it.</p>
+      <p>5. Open this app in Chrome — your piano will appear in the Output Device dropdown.</p>
 
       <h3>Keyboard shortcuts</h3>
       <p><kbd>Space</kbd> Play / Pause &nbsp; <kbd>Esc</kbd> Stop</p>
+
+      <h3>Known issues</h3>
+      <p>When you switch tabs during playback, Chrome throttles background timers. This can cause notes and pedal events to be delayed or dropped — you may hear missing notes or sustain glitches. Keep the tab in the foreground for best results.</p>
+      <p>Does not work on phones or tablets — the Web MIDI API is only supported on desktop Chrome and Edge.</p>
 
       <h3>Credits</h3>
       <p>Created by <a href="https://jeevanmr.com" target="_blank" rel="noopener">Jeevan M R</a> with the help of Claude Opus 4.6.</p>

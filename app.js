@@ -15,7 +15,6 @@ let isPaused = false;
 let startTime = 0;
 let elapsedAtPause = 0;
 let tempoScale = 1;
-let scheduledEvents = [];
 let activeNotes = new Set();
 let animFrameId = null;
 
