@@ -674,7 +674,13 @@ document.addEventListener('keydown', e => {
     if (isPlaying) pausePlayback();
     else if (midiData) startPlayback();
   }
-  if (e.code === 'Escape') stopPlayback();
+  if (e.code === 'Escape') {
+    if (dom.infoModal.classList.contains('show')) {
+      dom.infoModal.classList.remove('show');
+    } else {
+      stopPlayback();
+    }
+  }
 });
 
 let resizeTimeout;

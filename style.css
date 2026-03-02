@@ -72,11 +72,12 @@ body::before {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: none;
-  color: var(--text-muted);
+  border: none;
+  background: var(--amber-dim);
+  color: var(--bg);
   font-family: 'Instrument Serif', serif;
   font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -85,8 +86,7 @@ body::before {
 }
 
 .info-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text);
+  background: var(--amber);
 }
 
 .midi-status {
