@@ -283,12 +283,14 @@ body::before {
   font-weight: 300;
   line-height: 1.4;
   display: block;
+  pointer-events: none;
 }
 
 .song-duration {
   font-size: 10px;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 
 .song-list-empty {

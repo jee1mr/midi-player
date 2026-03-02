@@ -782,11 +782,15 @@ function filterSongs() {
   }
 
   if (songs.length > 100) {
-    dom.songList.innerHTML += `<div class="song-list-empty">${songs.length - 100} more — refine search</div>`;
+    const msg = document.createElement('div');
+    msg.className = 'song-list-empty';
+    msg.textContent = `${songs.length - 100} more — refine search`;
+    dom.songList.appendChild(msg);
   }
 }
 
 async function loadFromCatalog(song, btnEl) {
+  console.log('Loading from catalog:', song.title, song.file);
   stopPlayback();
   showToast(`Loading: ${song.title}...`);
 
